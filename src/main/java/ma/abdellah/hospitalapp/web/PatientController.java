@@ -27,4 +27,5 @@ public class PatientController {
         patientRepository.deleteById(id);
         return "redirect:/index";
     }
+
 }

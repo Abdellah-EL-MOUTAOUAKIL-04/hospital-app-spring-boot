@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>ma.abdellah</groupId>
-    <artifactId>hospital-app</artifactId>
+    <artifactId>hospital-app-spring-boot</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>hospital-app</name>
     <description>hospital-app</description>

@@ -12,8 +12,17 @@
 
 <div layout:fragment="content1">
     <div class="col-md-6 offset-3">
-        <h1>Formulaire de saisie des patients</h1>
-            <form method="post" th:action="@{save}">
+        <h1>Formulaire de modification des patients</h1>
+            <form method="post" th:action="@{save(page=${page},keyword=${keyword})}">
+
+                <div class="form-group">
+                    <label>
+                        ID:
+                    </label>
+                    <input  class="form-control" type="text" name="id" th:value="${patient.id}"/>
+                    <span class="text-danger" th:errors="${patient.nom}"></span>
+                </div>
+
                 <div class="form-group">
                     <label for="nom">
                         Name:

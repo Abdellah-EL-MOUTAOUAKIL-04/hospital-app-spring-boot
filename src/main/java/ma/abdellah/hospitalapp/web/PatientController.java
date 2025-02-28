@@ -22,12 +22,12 @@ public class PatientController {
     private PatientRepository patientRepository;
 
     @GetMapping("/index")
-    public String index(Model model,@RequestParam(name="page",defaultValue = "0") int page,
-                        @RequestParam(name="size",defaultValue = "5") int size,
-                        @RequestParam(name = "keyword",defaultValue = "") String keyword
-                        ) {
+    public String index(Model model, @RequestParam(name = "page", defaultValue = "0") int page,
+                        @RequestParam(name = "size", defaultValue = "5") int size,
+                        @RequestParam(name = "keyword", defaultValue = "") String keyword
+    ) {
         //Model nous permet de passer des données à la vue (template) en utilisant le modèle MVC  de Spring
-        Page<Patient> pagePatients= patientRepository.findByPrenomContainsIgnoreCaseOrNomContainsIgnoreCase(keyword,keyword,PageRequest.of(page, size));
+        Page<Patient> pagePatients = patientRepository.findByPrenomContainsIgnoreCaseOrNomContainsIgnoreCase(keyword, keyword, PageRequest.of(page, size));
 
         model.addAttribute("listPatients", pagePatients.getContent());
         model.addAttribute("pages", new int[pagePatients.getTotalPages()]);
@@ -39,22 +39,32 @@ public class PatientController {
     }
 
     @GetMapping("/deletePatient")
-    public String delete(@RequestParam( name="id") Long id,String keyword,int page) {
+    public String delete(@RequestParam(name = "id") Long id, String keyword, int page) {
         patientRepository.deleteById(id);
-        return "redirect:/index?page="+page+"&keyword="+keyword;
+        return "redirect:/index?page=" + page + "&keyword=" + keyword;
     }
 
     @GetMapping("/formPatients")
-    public String formPatients(Model model){
+    public String formPatients(Model model) {
         model.addAttribute("patient", new Patient());
         return "formPatients";
     }
 
     @PostMapping("/save")
-    public String savePatient(Model model, @Valid Patient patient, BindingResult bindingResult){
-        if(bindingResult.hasErrors()) return "formPatients";
+    public String savePatient(Model model, @Valid Patient patient, BindingResult bindingResult,@RequestParam(defaultValue = "0") int page,@RequestParam(defaultValue = "") String keyword) {
+        if (bindingResult.hasErrors()) return "formPatients";
         patientRepository.save(patient);
-        return "formPatients";
+        //la methhode save et utiliser pour les deux l'ajout et la modification
+        return "redirect:/index?page="+page+"&keyword="+keyword;
     }
 
+    @GetMapping("/editPatient")
+    public String editPatients(Model model, Long id ,String keyword, int page) {
+        Patient patient = patientRepository.findById(id).orElse(null);
+        if (patient == null) throw new RuntimeException("Patient introuvable");
+        model.addAttribute("patient", patient);
+        model.addAttribute("page",page);
+        model.addAttribute("keyword",keyword);
+        return "editPatient";
+    }
 }

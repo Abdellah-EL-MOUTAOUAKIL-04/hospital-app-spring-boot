@@ -17,7 +17,7 @@ public class HospitalAppApplication {
     }
 
     //Lorsque en utilise l'annotation @Bean, Spring va exécuter la méthode annotée au démarrage de l'application
-    @Bean
+    //@Bean
     public CommandLineRunner start(PatientRepository patientRepository) {
         return args -> {
             Patient p1 =new Patient();

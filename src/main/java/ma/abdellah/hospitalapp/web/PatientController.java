@@ -67,4 +67,9 @@ public class PatientController {
         model.addAttribute("keyword",keyword);
         return "editPatient";
     }
+
+    @GetMapping("/")
+    public String home() {
+        return "redirect:/index";
+    }
 }

@@ -13,8 +13,11 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
     @Bean
+    //cette fonction permet de gerer l'authentification des utilisateurs en utilisant un utilisateur en memoire(inMemoryAuthentication) il existe d'autre methode tels que jdbc, ldap, etc
     public InMemoryUserDetailsManager inMemoryUserDetailsManager(PasswordEncoder passwordEncoder) {
+        //la fonction va recuperer l'objet passwordEncoder qui est un objet de type PasswordEncoder et qui est injecter dans la classe HospitalAppApplication grace a l'annotation @Bean
         return new InMemoryUserDetailsManager(
                 User.withUsername("user1").password(passwordEncoder.encode("1234")).roles("USER").build(),
                 User.withUsername("user2").password(passwordEncoder.encode("1234")).roles("USER").build(),

@@ -19,7 +19,8 @@
                     <label>
                         ID:
                     </label>
-                    <input  class="form-control" type="text" name="id" th:value="${patient.id}"/>
+                    <label th:text="${patient.id}"></label>
+                    <input  class="form-control" type="hidden" name="id" th:value="${patient.id}"/>
                     <span class="text-danger" th:errors="${patient.nom}"></span>
                 </div>
 

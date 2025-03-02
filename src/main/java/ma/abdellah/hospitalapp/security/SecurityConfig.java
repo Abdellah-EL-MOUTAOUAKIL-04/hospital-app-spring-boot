@@ -29,13 +29,13 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
-        return httpSecurity
-                .formLogin(Customizer.withDefaults())
-                .authorizeHttpRequests(ar -> ar.requestMatchers("/admin/**").hasRole("ADMIN"))
-                .authorizeHttpRequests(ar -> ar.requestMatchers("/user/**").hasRole("USER"))
-                .authorizeHttpRequests(ar -> ar.anyRequest().authenticated())
-                .exceptionHandling(exception -> exception.accessDeniedHandler(accessDeniedHandler()))
-                .build();
+        httpSecurity.formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/",true).permitAll());
+        httpSecurity.authorizeHttpRequests(ar -> ar.requestMatchers("/webjars/**","/h2-console/**").permitAll());
+        httpSecurity.authorizeHttpRequests(ar -> ar.requestMatchers("/admin/**").hasRole("ADMIN"));
+        httpSecurity.authorizeHttpRequests(ar -> ar.requestMatchers("/user/**").hasRole("USER"));
+        httpSecurity.authorizeHttpRequests(ar -> ar.anyRequest().authenticated());
+        httpSecurity.exceptionHandling(exception -> exception.accessDeniedHandler(accessDeniedHandler()));
+        return httpSecurity.build();
     }
 
     @Bean

@@ -44,8 +44,12 @@
                         <td th:text="${p.dateNaissance}"></td>
                         <td th:text="${p.score}"></td>
                         <td th:text="${p.malade}"></td>
-                        <td><a onclick="return confirm('est ce que vous etes sur de supprimer ?')" class="btn btn-danger" th:href="@{/admin/deletePatient(id=${p.id},page=${currentPage},keyword=${keyword})}">Delete</a></td>
-                        <td><a class="btn btn-success" th:href="@{/admin/editPatient(id=${p.id},keyword=${keyword},page=${currentPage})}">Edit</a></td>
+                        <td th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                            <a onclick="return confirm('est ce que vous etes sur de supprimer ?')" class="btn btn-danger" th:href="@{/admin/deletePatient(id=${p.id},page=${currentPage},keyword=${keyword})}">Delete</a>
+                        </td>
+                        <td th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+                            <a class="btn btn-success" th:href="@{/admin/editPatient(id=${p.id},keyword=${keyword},page=${currentPage})}">Edit</a>
+                        </td>
                     </tr>
                     </tbody>
                 </table>

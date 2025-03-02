@@ -1,4 +1,4 @@
-package ma.abdellah.hospitalapp.security;
+package ma.abdellah.hospitalapp.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

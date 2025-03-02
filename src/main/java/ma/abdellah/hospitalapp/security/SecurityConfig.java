@@ -30,6 +30,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.formLogin(form -> form.loginPage("/login").defaultSuccessUrl("/",true).permitAll());
+        httpSecurity.rememberMe(Customizer.withDefaults());
         httpSecurity.authorizeHttpRequests(ar -> ar.requestMatchers("/webjars/**","/h2-console/**").permitAll());
         httpSecurity.authorizeHttpRequests(ar -> ar.requestMatchers("/admin/**").hasRole("ADMIN"));
         httpSecurity.authorizeHttpRequests(ar -> ar.requestMatchers("/user/**").hasRole("USER"));

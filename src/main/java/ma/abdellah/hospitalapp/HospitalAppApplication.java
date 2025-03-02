@@ -51,7 +51,7 @@ public class HospitalAppApplication {
     }
 
     //cette fonction permettre de créer des utilisateurs et les roles associés en utilisant l'interface JdbcUserDetailsManager
-    @Bean
+    //@Bean
     CommandLineRunner commandLineRunner(JdbcUserDetailsManager jdbcUserDetailsManager){
         PasswordEncoder passwordEncoder=passwordEncoder();
         return args -> {
@@ -64,7 +64,7 @@ public class HospitalAppApplication {
         };
     }
 
-    @Bean
+   // @Bean
     public CommandLineRunner commandLineRunnerUserdetails(AccountService accountService){
         return args -> {
             accountService.addNewRole("USER");

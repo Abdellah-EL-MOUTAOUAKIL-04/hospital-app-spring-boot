@@ -1,5 +1,8 @@
 package ma.abdellah.hospitalapp.security;
 
+import lombok.AllArgsConstructor;
+import ma.abdellah.hospitalapp.security.service.UserDetailServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -22,10 +25,13 @@ import javax.sql.DataSource;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
+@AllArgsConstructor
 //cette annotation permet de proteger les methodes de l'application en utilisant les annotations @PreAuthorize et @PostAuthorize
 public class SecurityConfig {
 
-    @Bean
+    private PasswordEncoder passwordEncoder;
+    private UserDetailServiceImpl userDetailServiceImpl;
+    //@Bean
     public JdbcUserDetailsManager jdbcUserDetailsManager(DataSource dataSource) {
         return new JdbcUserDetailsManager(dataSource);
     }
@@ -50,6 +56,7 @@ public class SecurityConfig {
         //httpSecurity.authorizeHttpRequests(ar -> ar.requestMatchers("/user/**").hasRole("USER"));
         httpSecurity.authorizeHttpRequests(ar -> ar.anyRequest().authenticated());
         httpSecurity.exceptionHandling(exception -> exception.accessDeniedHandler(accessDeniedHandler()));
+        httpSecurity.userDetailsService(userDetailServiceImpl);
         return httpSecurity.build();
     }
 
